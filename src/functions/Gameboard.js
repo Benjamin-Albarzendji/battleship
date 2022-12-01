@@ -17,7 +17,12 @@ const GameboardFactory = () => {
   let alignment = 'horizontal';
   let sunkCounter = 0;
 
-  const sunkIncrementor = () => (sunkCounter += 1);
+  const sunkIncrementor = () => {
+    sunkCounter += 1;
+  };
+  if (sunkCounter === 10) {
+    gameOver();
+  }
 
   // Function to both create and restart the grid
   const gridCreator = () => {
@@ -27,6 +32,10 @@ const GameboardFactory = () => {
         board[i][j] = 0;
       }
     }
+  };
+
+  const gameOver = () => {
+    // DECIDE LATER
   };
 
   // Function to receive a hit on the grid
