@@ -1,12 +1,13 @@
 import './style/style.css';
-import GameboardFactory from './functions/GameboardFactory';
-const shipFactory = require('./functions/shipFactory');
+const GameboardFactory =require('./functions/GameboardFactory')
+const Player =require('./functions/player')
+
 
 
 const Gameboard =GameboardFactory()
 
 Gameboard.gridCreator()
-console.log(Gameboard.shipPlacer(4,5,5))
+// console.log(Gameboard.shipPlacer(4,5,5))
 
 // console.log(shipFactory(4))
 

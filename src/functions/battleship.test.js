@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const shipFactory = require('./shipFactory');
 const GameboardFactory = require('./GameboardFactory');
+const Player = require('./player');
 
 describe('Testing the shipFactory module', () => {
   const testBoat = shipFactory(4);

@@ -187,13 +187,15 @@ const GameboardFactory = () => {
     }
   };
 
+  const getBoard = () => board;
+
   return {
     gridCreator,
     shipPlacer,
     toggleAlignment,
     receiveHit,
+    getBoard
   };
 };
 
 module.exports = GameboardFactory;
-
