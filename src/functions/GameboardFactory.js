@@ -1,16 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-return-assign */
 
-const shipFactory = (length) => {
-  let hits = 0;
-  const isSunk = (hits = getHits(), length = getLength()) => hits >= length;
-  const hit = () => (hits += 1);
-  const getHits = () => hits;
-  const getLength = () => length;
-  return { isSunk, hit, getHits };
-};
-
-module.exports = shipFactory;
+const shipFactory = require('./shipFactory');
 
 const GameboardFactory = () => {
   const board = [];
@@ -32,6 +23,7 @@ const GameboardFactory = () => {
         board[i][j] = 0;
       }
     }
+    return true;
   };
 
   const gameOver = () => {
@@ -41,16 +33,12 @@ const GameboardFactory = () => {
   // Function to receive a hit on the grid
   const receiveHit = (ROW, COLUMN) => {
     // On miss
-    if (board[ROW][COLUMN] === 0) {
+    if (board[ROW][COLUMN] === 0 || board[ROW][COLUMN] === 1) {
       board[ROW][COLUMN] = 'M';
       return 'M';
     }
-    // On targetting an already missed row
-    if (
-      board[ROW][COLUMN] === 'M' ||
-      board[ROW][COLUMN] === 'H' ||
-      board[ROW][COLUMN] === 1
-    ) {
+    // On targetting non targetable row
+    if (board[ROW][COLUMN] === 'M' || board[ROW][COLUMN] === 'H') {
       return false;
     }
     // On hitting ship object
@@ -69,17 +57,19 @@ const GameboardFactory = () => {
     if (!shipPlacerChecker(size, ROW, COLUMN)) {
       return false;
     }
-
+    // Disables grid around ship object
     gridDisabler(size, ROW, COLUMN);
 
+    // Creates a ship object using the ship Factory
     const ship = shipFactory(size);
 
+    // Horizontal placing
     if (alignment === 'horizontal') {
       for (let i = 0; i < size; i += 1) {
         board[ROW][COLUMN + i] = ship;
       }
     }
-
+    // Vertical
     if (alignment === 'vertical') {
       for (let i = 0; i < size; i += 1) {
         board[ROW + i][COLUMN] = ship;
@@ -128,6 +118,7 @@ const GameboardFactory = () => {
 
   // This function disables the grid around the ship
   const gridDisabler = (size, ROW, COLUMN) => {
+    // Horizontal disabler
     if (alignment === 'horizontal') {
       if (COLUMN > 0) {
         board[ROW][COLUMN - 1] = 1;
@@ -145,7 +136,6 @@ const GameboardFactory = () => {
           board[ROW + 1][COLUMN + i] = 1;
         }
       }
-
       if (ROW <= 9 && ROW > 0) {
         for (let i = -1; i < size + 1; i += 1) {
           if (COLUMN + i < 0 || COLUMN + i > 9) {
@@ -156,6 +146,7 @@ const GameboardFactory = () => {
       }
     }
 
+    // Vertical disabler
     if (alignment === 'vertical') {
       if (ROW > 0) {
         board[ROW - 1][COLUMN] = 1;
@@ -184,36 +175,25 @@ const GameboardFactory = () => {
       }
     }
   };
+
   // Alignment toggler
   const toggleAlignment = () => {
     if (alignment === 'horizontal') {
       alignment = 'vertical';
+      return 'vertical';
     } else {
       alignment = 'horizontal';
+      return 'horizontal';
     }
   };
 
   return {
     gridCreator,
-    board,
     shipPlacer,
     toggleAlignment,
     receiveHit,
   };
 };
 
-const Gameboard = GameboardFactory();
-
-Gameboard.gridCreator();
-
-console.log(Gameboard.shipPlacer(4, 4, 4));
-
-console.log(Gameboard.shipPlacer(2, 0, 0));
-console.log(Gameboard.shipPlacer(2, 9, 0));
-Gameboard.receiveHit(0, 0);
-
-Gameboard.receiveHit(0, 1);
-
-console.log(Gameboard.board);
-
 module.exports = GameboardFactory;
+
