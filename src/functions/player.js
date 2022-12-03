@@ -24,3 +24,5 @@ const PlayerFactory = (name = 'Player') => {
 
   return { board: playerBoard, getName, CompSendHit };
 };
+
+module.exports = PlayerFactory;

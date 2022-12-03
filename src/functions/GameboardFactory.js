@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-return-assign */
 
@@ -25,11 +26,9 @@ const GameboardFactory = () => {
 
   const gameOver = () => {
     if (sunkCounter === 10) {
-      return true
+      return true;
     }
-    return false
-    
-  
+    return false;
   };
 
   // Function to receive a hit on the grid
@@ -52,6 +51,26 @@ const GameboardFactory = () => {
       board[ROW][COLUMN] = 'H';
       return 'H';
     }
+  };
+
+  const randomizer = () => {
+    const ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+    gridCreator();
+
+    ships.forEach((shipSize) => {
+      let row = 0;
+      let col = 0;
+      let goodToGo = false;
+      Math.floor(Math.random() * 2) === 1 ? toggleAlignment() : 0;
+      while (!goodToGo) {
+        (row = Math.floor(Math.random() * 10)),
+          (col = Math.floor(Math.random() * 10));
+
+        if (shipPlacer(shipSize, row, col)) {
+          goodToGo = true;
+        }
+      }
+    });
   };
 
   // Function that places a ship on the grid
@@ -183,10 +202,9 @@ const GameboardFactory = () => {
     if (alignment === 'horizontal') {
       alignment = 'vertical';
       return 'vertical';
-    } else {
-      alignment = 'horizontal';
-      return 'horizontal';
     }
+    alignment = 'horizontal';
+    return 'horizontal';
   };
 
   const getBoard = () => board;
@@ -197,6 +215,7 @@ const GameboardFactory = () => {
     toggleAlignment,
     receiveHit,
     getBoard,
+    randomizer,
   };
 };
 
