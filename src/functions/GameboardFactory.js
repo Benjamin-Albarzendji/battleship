@@ -11,9 +11,6 @@ const GameboardFactory = () => {
   const sunkIncrementor = () => {
     sunkCounter += 1;
   };
-  if (sunkCounter === 10) {
-    gameOver();
-  }
 
   // Function to both create and restart the grid
   const gridCreator = () => {
@@ -27,7 +24,12 @@ const GameboardFactory = () => {
   };
 
   const gameOver = () => {
-    // DECIDE LATER
+    if (sunkCounter === 10) {
+      return true
+    }
+    return false
+    
+  
   };
 
   // Function to receive a hit on the grid
@@ -194,7 +196,7 @@ const GameboardFactory = () => {
     shipPlacer,
     toggleAlignment,
     receiveHit,
-    getBoard
+    getBoard,
   };
 };
 

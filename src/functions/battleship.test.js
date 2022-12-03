@@ -59,7 +59,6 @@ describe('GameboardFactory module', () => {
   });
 
   test('Testing the ReceiveHit() function', () => {
-    
     expect(gameBoard.receiveHit(5, 5)).toBe('H');
     expect(gameBoard.receiveHit(5, 6)).toBe('H');
     expect(gameBoard.receiveHit(5, 7)).toBe('H');
@@ -78,5 +77,19 @@ describe('GameboardFactory module', () => {
     expect(gameBoard.receiveHit(6, 4)).toBe('M');
     expect(gameBoard.receiveHit(5, 4)).toBe('M');
     expect(gameBoard.receiveHit(4, 4)).toBe('M');
+  });
+});
+
+describe('Testing the Player module', () => {
+  const player1 = Player('Markus');
+  test('Testing the getName() function', () => {
+    expect(player1.getName()).toBe('Markus');
+  });
+  test('Testing the access to the player board', () => {
+    expect(typeof player1.board).toBe('object');
+  });
+
+  test('Testing the CompSendHit() function', () => {
+    expect(typeof player1.CompSendHit()).toBe('object');
   });
 });
