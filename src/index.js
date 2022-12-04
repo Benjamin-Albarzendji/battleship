@@ -1,16 +1,19 @@
+import { enemyGridEventListener, createGrid, gridPainter } from './functions/DOM';
 import './style/style.css';
-const GameboardFactory =require('./functions/GameboardFactory')
-const Player =require('./functions/player')
+const GameboardFactory = require('./functions/GameboardFactory');
+const Player = require('./functions/player');
+
+const player = Player();
+player.board.randomizer();
+
+const compPlayer = Player();
+compPlayer.board.randomizer();
+
+const playerBoard = player.board.getBoard();
+
+createGrid();
+
+gridPainter(playerBoard);
 
 
-
-const Gameboard =GameboardFactory()
-
-Gameboard.gridCreator()
-// console.log(Gameboard.shipPlacer(4,5,5))
-
-// console.log(shipFactory(4))
-
-
-
-
+enemyGridEventListener(compPlayer.board.receiveHit)

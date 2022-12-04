@@ -1,3 +1,36 @@
-body{
-    
+body {
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gridContainer {
+    justify-content: center;;
+  display: flex;
+  gap: 250px;
+  width: 350px;
+  height: 350px;
+  /* border: solid 1px black; */
+}
+
+.gridRow {
+  display: flex;
+}
+
+.gridCell {
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgba(117, 117, 117, 0.332);
+}
+
+.gridCell.ship{
+    background: rgba(33, 107, 236, 0.585);
+    border: 1px solid rgb(45, 88, 230);;
+
+}
+
+.gridCell:hover{
+    border: 1px solid red;
 }
