@@ -45,20 +45,35 @@ function gridPainter(grid) {
 }
 
 function enemyGridEventListener(hitConfirmer) {
-  const enemyGrid = document.querySelector('.grid2');
-  const gridChildren = enemyGrid.childNodes;
+  const enemyGrid = document.querySelectorAll('.grid2 > *>*');
 
-  gridChildren.forEach(cell => {
-    cell.addEventListener("click", (e) => {
-        const [row,col] = e.target.id.split(" ")
-        console.log(row)
-        console.log(col)
+  const listenerForwarder = function (e) {
+    console.log(this);
+    HitOnClickListener(e.target, hitConfirmer, listenerForwarder);
+  };
 
-        console.log(hitConfirmer(row, col))
-
-        cell.removeEventListener("click")
-    })
+  enemyGrid.forEach((cell) => {
+    cell.addEventListener('click', listenerForwarder);
   });
+}
+
+// function listenerForwarder(e, hitConfirmer){
+
+//     HitOnClickListener(e, hitConfirmer,)
+// }
+
+function HitOnClickListener(cell, hitConfirmer, listenerForwarder) {
+  const [row, col] = cell.id.split(' ');
+  const hitStatus = hitConfirmer(row, col);
+  console.log(hitStatus);
+  hitStatus === "M" ? cell.className = "gridCellM": cell.className = "gridCellH"
+  if (hitStatus === "M") {
+    const textDiv = document.createElement("div");
+    textDiv.textContent = "."
+    cell.appendChild(textDiv)
+  }
+
+  cell.removeEventListener('click', listenerForwarder);
 }
 
 export { gridPainter, createGrid, enemyGridEventListener };

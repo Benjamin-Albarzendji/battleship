@@ -7,7 +7,7 @@ body {
 }
 
 .gridContainer {
-    justify-content: center;;
+  justify-content: center;
   display: flex;
   gap: 250px;
   width: 350px;
@@ -25,12 +25,37 @@ body {
   border: 1px solid rgba(117, 117, 117, 0.332);
 }
 
-.gridCell.ship{
-    background: rgba(33, 107, 236, 0.585);
-    border: 1px solid rgb(45, 88, 230);;
-
+.gridCell.ship {
+  background: rgba(33, 107, 236, 0.585);
+  border: 1px solid rgb(45, 88, 230);
 }
 
-.gridCell:hover{
-    border: 1px solid red;
+.grid2 .gridCell:hover {
+  border: 1px solid red;
+}
+
+.gridCellM{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid rgba(117, 117, 117, 0.332);
+    background-color: rgba(252, 246, 184, 0.282);
+}
+
+.gridCellM > *{
+    
+    position: absolute;
+    top:-35%;
+    
+    font-size: 2rem;
+    text-align: center;
+}
+
+.gridCellH{
+    width: 35px;
+    height: 35px;
+    border: 1px solid rgba(117, 117, 117, 0.332);
+    background-color: red;
 }
