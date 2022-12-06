@@ -14,8 +14,14 @@ const PlayerFactory = (name = 'Player') => {
         x: Math.floor(Math.random() * 10),
         y: Math.floor(Math.random() * 10),
       };
-      if (!sentHits.includes(hitObject)) {
-        goodToGo = true;
+
+      goodToGo = true;
+      let dupeChecker = 0;
+      for (let i = 0; i < sentHits.length; i += 1) {
+        if (sentHits[i].x === hitObject.x && sentHits[i].y === hitObject.y) {
+          dupeChecker += 1;
+        }
+        dupeChecker === 0 ? (goodToGo = true) : (goodToGo = false);
       }
     }
     sentHits.push(hitObject);

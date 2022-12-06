@@ -4,12 +4,15 @@ const shipFactory = (length) => {
   if (length < 1 || length > 4) {
     return false;
   }
+  let alignment = 'notSet';
   let hits = 0;
   const isSunk = (hits = getHits(), length = getLength()) => hits >= length;
   const hit = () => (hits += 1);
   const getHits = () => hits;
   const getLength = () => length;
-  return { isSunk, hit };
+  const setAlignment = (align) => (alignment = align);
+  const getAlignment = () => alignment;
+  return { isSunk, hit, setAlignment, getAlignment };
 };
-// export {shipFactory}
+
 module.exports = shipFactory;

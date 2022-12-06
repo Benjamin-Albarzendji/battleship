@@ -83,6 +83,7 @@ const GameboardFactory = () => {
 
     // Creates a ship object using the ship Factory
     const ship = shipFactory(size);
+    ship.setAlignment(alignment);
 
     // Horizontal placing
     if (alignment === 'horizontal') {

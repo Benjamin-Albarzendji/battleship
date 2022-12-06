@@ -41,7 +41,7 @@ body {
     width: 35px;
     height: 35px;
     border: 1px solid rgba(117, 117, 117, 0.332);
-    background-color: rgba(252, 246, 184, 0.282);
+    background-color: rgba(228, 225, 196, 0.282);
 }
 
 .gridCellM > *{

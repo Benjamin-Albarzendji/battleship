@@ -1,3 +1,5 @@
+const Player = require('./player');
+
 function createGrid() {
   const gridContainer = document.createElement('div');
   gridContainer.className = 'gridContainer';
@@ -44,12 +46,11 @@ function gridPainter(grid) {
   }
 }
 
-function enemyGridEventListener(hitConfirmer) {
+function enemyGridEventListener(compPlayer, player) {
   const enemyGrid = document.querySelectorAll('.grid2 > *>*');
 
   const listenerForwarder = function (e) {
-    console.log(this);
-    HitOnClickListener(e.target, hitConfirmer, listenerForwarder);
+    HitOnClick(e.target, compPlayer, listenerForwarder, player);
   };
 
   enemyGrid.forEach((cell) => {
@@ -57,23 +58,42 @@ function enemyGridEventListener(hitConfirmer) {
   });
 }
 
-// function listenerForwarder(e, hitConfirmer){
-
-//     HitOnClickListener(e, hitConfirmer,)
-// }
-
-function HitOnClickListener(cell, hitConfirmer, listenerForwarder) {
+function HitOnClick(cell, compPlayer, listenerForwarder, player) {
   const [row, col] = cell.id.split(' ');
-  const hitStatus = hitConfirmer(row, col);
-  console.log(hitStatus);
-  hitStatus === "M" ? cell.className = "gridCellM": cell.className = "gridCellH"
-  if (hitStatus === "M") {
-    const textDiv = document.createElement("div");
-    textDiv.textContent = "."
-    cell.appendChild(textDiv)
+  const hitStatus = compPlayer.board.receiveHit(row, col);
+  hitStatus === 'M'
+    ? (cell.className = 'gridCellM')
+    : (cell.className = 'gridCellH');
+  if (hitStatus === 'M') {
+    const textDiv = document.createElement('div');
+    textDiv.textContent = '.';
+    cell.appendChild(textDiv);
   }
-
   cell.removeEventListener('click', listenerForwarder);
+
+  turnSwitcher(compPlayer, player);
 }
 
-export { gridPainter, createGrid, enemyGridEventListener };
+function compHit(coords, hitConfirmer) {
+  const row = coords.x;
+  const col = coords.y;
+  const cell = document.getElementById(`${row} ${col}`);
+  const hitStatus = hitConfirmer(row, col);
+
+  hitStatus === 'M'
+    ? (cell.className = 'gridCellM')
+    : (cell.className = 'gridCellH');
+  if (hitStatus === 'M') {
+    const textDiv = document.createElement('div');
+    textDiv.textContent = '.';
+    cell.appendChild(textDiv);
+  }
+}
+
+function hitPainter(row, col, board, alignment) {}
+
+function turnSwitcher(compPlayer, player) {
+  compHit(compPlayer.CompSendHit(), player.board.receiveHit);
+}
+
+export { gridPainter, createGrid, enemyGridEventListener, compHit };

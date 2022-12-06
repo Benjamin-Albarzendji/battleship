@@ -1,4 +1,9 @@
-import { enemyGridEventListener, createGrid, gridPainter } from './functions/DOM';
+import {
+  enemyGridEventListener,
+  createGrid,
+  gridPainter,
+  compHit,
+} from './functions/DOM';
 import './style/style.css';
 const GameboardFactory = require('./functions/GameboardFactory');
 const Player = require('./functions/player');
@@ -15,5 +20,6 @@ createGrid();
 
 gridPainter(playerBoard);
 
+enemyGridEventListener(compPlayer, player);
 
-enemyGridEventListener(compPlayer.board.receiveHit)
+
