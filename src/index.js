@@ -21,5 +21,3 @@ createGrid();
 gridPainter(playerBoard);
 
 enemyGridEventListener(compPlayer, player);
-
-

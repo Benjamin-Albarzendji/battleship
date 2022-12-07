@@ -48,6 +48,7 @@ const GameboardFactory = () => {
       if (board[ROW][COLUMN].isSunk() === true) {
         sunkIncrementor();
       }
+      const shipAlignment = board[ROW][COLUMN].getAlignment();
       board[ROW][COLUMN] = 'H';
       return 'H';
     }
@@ -217,6 +218,7 @@ const GameboardFactory = () => {
     receiveHit,
     getBoard,
     randomizer,
+    gameOver,
   };
 };
 
