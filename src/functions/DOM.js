@@ -2,6 +2,9 @@
 /* eslint-disable no-unused-expressions */
 // const Player = require('./player');
 
+import { startTheGame } from '..';
+
+// Creastes the grid with gridLoop
 function createGrid() {
   const gridContainer = document.createElement('div');
   gridContainer.className = 'gridContainer';
@@ -34,6 +37,7 @@ function gridLoop(container, typeOfPlayer) {
   }
 }
 
+// Paints the player board grid
 function gridPainter(grid) {
   for (let i = 0; i < 10; i += 1) {
     for (let j = 0; j < 10; j += 1) {
@@ -47,7 +51,7 @@ function gridPainter(grid) {
     }
   }
 }
-
+// Activates the click listener on the enemy grid
 function enemyGridEventListener(compPlayer, player) {
   const enemyGrid = document.querySelectorAll('.grid2 > *>*');
 
@@ -73,10 +77,10 @@ function HitOnClick(cell, compPlayer, listenerForwarder, player) {
   }
   cell.removeEventListener('click', listenerForwarder);
 
-  isGameOver(compPlayer);
+  isGameOver(compPlayer, player);
   turnSwitcher(compPlayer, player);
 }
-
+// The computer hit function
 function compHit(coords, hitConfirmer) {
   const row = coords.x;
   const col = coords.y;
@@ -93,14 +97,66 @@ function compHit(coords, hitConfirmer) {
   }
 }
 
+// A turn switcher that hits for the computer and checks if the game is over
 function turnSwitcher(compPlayer, player) {
-  compHit(compPlayer.CompSendHit(), player.board.receiveHit);
-  isGameOver(player);
+  for (let i = 0; i < 100; i++) {
+    compHit(compPlayer.CompSendHit(), player.board.receiveHit);
+    isGameOver(player, compPlayer);
+  }
 }
 
-function isGameOver(board) {
-  // TO FIX //
-  //   console.log(board.board.gameOver());
+// If game is over it will call the gameoverDom
+function isGameOver(loser, winner) {
+  if (loser.board.gameOver()) {
+    gameOverDOM(winner);
+  }
+}
+
+// Creates UI elements for the game over
+function gameOverDOM(winner) {
+  // Gameover Container
+  const gameOverContainer = document.createElement('div');
+  gameOverContainer.className = 'gameOverContainer';
+  document.body.appendChild(gameOverContainer);
+
+  // Final text div
+  const finalTextDiv = document.createElement('div');
+  finalTextDiv.className = 'finalTextDiv';
+  gameOverContainer.appendChild(finalTextDiv);
+
+  // Play again div
+  const playAgain = document.createElement('div');
+  playAgain.className = 'playAgain';
+  playAgain.textContent =
+    'The war is not over! Ready for another battle, soldier?';
+  gameOverContainer.appendChild(playAgain);
+
+  // Play again Button
+  const playAgainButton = document.createElement('button');
+  playAgainButton.className = 'playAgainButton';
+  playAgainButton.textContent = 'Next Battle';
+  gameOverContainer.appendChild(playAgainButton);
+  const resetForwarder = function (e) {
+    reset();
+  };
+  playAgainButton.addEventListener('click', resetForwarder);
+
+  if (winner.getName() === 'Computer') {
+    finalTextDiv.textContent = `You lost the battle!`;
+  } else {
+    finalTextDiv.textContent = `${winner.getName()} Won The Battle of Ships!`;
+  }
+}
+
+// Resets the game with a function called from the index.js module
+function reset() {
+  const gridContainer = document.querySelector('.gridContainer');
+  gridContainer.remove();
+
+  const gameOverContainer = document.querySelector('.gameOverContainer');
+  gameOverContainer.remove();
+
+  startTheGame();
 }
 
 export { gridPainter, createGrid, enemyGridEventListener, compHit };

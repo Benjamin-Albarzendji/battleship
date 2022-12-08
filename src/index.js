@@ -2,22 +2,37 @@ import {
   enemyGridEventListener,
   createGrid,
   gridPainter,
-  compHit,
 } from './functions/DOM';
 import './style/style.css';
-const GameboardFactory = require('./functions/GameboardFactory');
+// const GameboardFactory = require('./functions/GameboardFactory');
 const Player = require('./functions/player');
 
-const player = Player();
-player.board.randomizer();
+function getName() {
 
-const compPlayer = Player();
-compPlayer.board.randomizer();
 
-const playerBoard = player.board.getBoard();
+}
 
-createGrid();
 
-gridPainter(playerBoard);
 
-enemyGridEventListener(compPlayer, player);
+
+function startTheGame(name = "You") {
+  // Initializes the player gameboard
+  const player = Player(name);
+  player.board.randomizer();
+  const playerBoard = player.board.getBoard();
+
+  // Initializes the computer
+  const compPlayer = Player('Computer');
+  compPlayer.board.randomizer();
+  
+
+  // Creates the interactive grid from the DOM.js file
+  createGrid();
+  gridPainter(playerBoard);
+  enemyGridEventListener(compPlayer, player);
+}
+
+startTheGame();
+
+// Exported so it works in the reset() function in the DOM.js module
+export { startTheGame };

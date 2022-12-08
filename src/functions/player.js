@@ -2,10 +2,15 @@ const GameboardFactory = require('./GameboardFactory');
 
 const PlayerFactory = (name = 'Player') => {
   const getName = () => name;
+
+  // Calls the GameboardFactory module to give the player a board
   const playerBoard = GameboardFactory();
+  // Creates the data grid
   playerBoard.gridCreator();
 
+  // Container to make sure the computer does not send duplicate hits
   const sentHits = [];
+  // The Function that handles computer hits
   const CompSendHit = () => {
     let hitObject = { x: 0, y: 0 };
     let goodToGo = false;

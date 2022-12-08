@@ -1,9 +1,9 @@
 body {
   height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .gridContainer {
@@ -30,33 +30,70 @@ body {
   border: 1px solid rgb(45, 88, 230);
 }
 
+
 .grid2 .gridCell:hover {
   border: 1px solid red;
 }
 
-.gridCellM{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    border: 1px solid rgba(117, 117, 117, 0.332);
-    background-color: rgba(228, 225, 196, 0.282);
+.gridCellM {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgba(117, 117, 117, 0.332);
+  background-color: rgba(228, 225, 196, 0.282);
 }
 
-.gridCellM > *{
-    
+.gridCellM > * {
+  position: absolute;
+  top: -35%;
+
+  font-size: 2rem;
+  text-align: center;
+}
+
+.gridCellH {
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgba(117, 117, 117, 0.332);
+  background-color: red;
+}
+
+.gameOverContainer {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.finalTextDiv{
+    font-size: 3rem;
     position: absolute;
-    top:-35%;
-    
-    font-size: 2rem;
-    text-align: center;
+    top: 17%;
 }
 
-.gridCellH{
-    width: 35px;
-    height: 35px;
-    border: 1px solid rgba(117, 117, 117, 0.332);
-    background-color: red;
+.playAgain{
+    position: absolute;
+    top: 24%;
 }
 
+.playAgainButton{
+    position: absolute;
+    top:28%;
+    width: 90px;
+    border-radius: 15px;
+    border: none;
+    padding: 10px;
+    background-color: bla;
+    font-weight: bold;
+    transition: 1s;
+}
+
+.playAgainButton:hover{
+    cursor:pointer;
+}
+.playAgainButton:active{
+transform: scale(0.9);
+transition: 1s;
+}
