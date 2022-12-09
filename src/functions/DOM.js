@@ -7,7 +7,7 @@ import { startTheGame } from '..';
 // Creastes the grid with gridLoop
 function createGrid() {
   const gridContainer = document.createElement('div');
-  gridContainer.className = 'gridContainer';
+  gridContainer.className = 'gridContainer animate__animated animate__fadeIn';
   document.body.appendChild(gridContainer);
 
   const grid1 = document.createElement('div');
@@ -22,16 +22,31 @@ function createGrid() {
 }
 
 function gridLoop(container, typeOfPlayer) {
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 0; i < 11; i += 1) {
     const gridRow = document.createElement('div');
     gridRow.className = 'gridRow';
+
+    if (i === 0) {
+      gridRow.className = 'gridRowAlphaNum';
+    }
     gridRow.setAttribute('value', i);
     container.appendChild(gridRow);
 
-    for (let j = 0; j < 10; j += 1) {
+    for (let j = 0; j < 11; j += 1) {
       const gridCell = document.createElement('div');
       gridCell.className = 'gridCell';
-      gridCell.id = `${i}${typeOfPlayer}${j}`;
+
+      if (j === 0) {
+        gridCell.textContent = i;
+        gridCell.className = 'gridAlphaNum';
+      }
+      if (i === 0) {
+        const upperGrid = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+        gridCell.textContent = upperGrid[j];
+        gridCell.className = 'gridAlphaNum';
+      }
+
+      gridCell.id = `${i - 1}${typeOfPlayer}${j - 1}`;
       gridRow.appendChild(gridCell);
     }
   }
@@ -53,7 +68,7 @@ function gridPainter(grid) {
 }
 // Activates the click listener on the enemy grid
 function enemyGridEventListener(compPlayer, player) {
-  const enemyGrid = document.querySelectorAll('.grid2 > *>*');
+  const enemyGrid = document.querySelectorAll('.grid2 > *> .gridCell');
 
   const listenerForwarder = function (e) {
     HitOnClick(e.target, compPlayer, listenerForwarder, player);
@@ -99,10 +114,10 @@ function compHit(coords, hitConfirmer) {
 
 // A turn switcher that hits for the computer and checks if the game is over
 function turnSwitcher(compPlayer, player) {
-  for (let i = 0; i < 100; i++) {
-    compHit(compPlayer.CompSendHit(), player.board.receiveHit);
-    isGameOver(player, compPlayer);
-  }
+  //   for (let i = 0; i < 100; i++) {
+  compHit(compPlayer.CompSendHit(), player.board.receiveHit);
+  isGameOver(player, compPlayer);
+  //   }
 }
 
 // If game is over it will call the gameoverDom
@@ -116,7 +131,8 @@ function isGameOver(loser, winner) {
 function gameOverDOM(winner) {
   // Gameover Container
   const gameOverContainer = document.createElement('div');
-  gameOverContainer.className = 'gameOverContainer';
+  gameOverContainer.className =
+    'gameOverContainer animate__animated animate__fadeIn';
   document.body.appendChild(gameOverContainer);
 
   // Final text div
@@ -128,7 +144,7 @@ function gameOverDOM(winner) {
   const playAgain = document.createElement('div');
   playAgain.className = 'playAgain';
   playAgain.textContent =
-    'The war is not over! Ready for another battle, soldier?';
+    'The war is not over! Ready for another battle, Admiral?';
   gameOverContainer.appendChild(playAgain);
 
   // Play again Button
@@ -144,19 +160,24 @@ function gameOverDOM(winner) {
   if (winner.getName() === 'Computer') {
     finalTextDiv.textContent = `You lost the battle!`;
   } else {
-    finalTextDiv.textContent = `${winner.getName()} Won The Battle of Ships!`;
+    finalTextDiv.textContent = `${winner.getName()} Won The Battle!`;
   }
 }
 
 // Resets the game with a function called from the index.js module
 function reset() {
   const gridContainer = document.querySelector('.gridContainer');
-  gridContainer.remove();
+  gridContainer.className = 'gridContainer animate__animated animate__fadeOut';
 
   const gameOverContainer = document.querySelector('.gameOverContainer');
-  gameOverContainer.remove();
+  gameOverContainer.className =
+    'gameOverContainer animate__animated animate__fadeOut';
 
-  startTheGame();
+  gameOverContainer.addEventListener('animationend', () => {
+    gameOverContainer.remove();
+    gridContainer.remove();
+    startTheGame();
+  });
 }
 
 export { gridPainter, createGrid, enemyGridEventListener, compHit };
