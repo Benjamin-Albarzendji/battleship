@@ -65,10 +65,11 @@ function startTheGame(name = 'You') {
   // Creates the interactive grid from the DOM.js file
   createGrid();
   gridPainter(playerBoard);
+  enemyGridEventListener(compPlayer, player);
 }
 
 function startTheBattle(compPlayer, player) {
-  enemyGridEventListener(compPlayer, player);
+  
 }
 
 frontPage();
