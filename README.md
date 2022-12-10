@@ -6,9 +6,9 @@
 
 ### Player Grid
 
-<img src="src/images/grid.png" alt="drawing" width="400" style = "border-radius: 15px"/>
+<img src="src/images/Grid.png" alt="drawing" width="400" style = "border-radius: 15px"/>
 
-## Access the page [here](https://benjamin-albarzendji.github.io/battleship/)
+## Access the page [here](https://benjamin-albarzendji.github.io/odin-battleship/)
 
 ### Description
 
