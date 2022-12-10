@@ -4,94 +4,107 @@
 
 import { startTheGame } from '..';
 
-
+// Creates the frontPage asking for user name input with event listeners attached to both button and "Enter"
 function frontPage() {
-    // FrontPage Container
-    const frontPageContainer = document.createElement('div');
-    frontPageContainer.className = 'frontPage animate__animated animate__zoomIn';
-    document.body.appendChild(frontPageContainer);
-  
-    const textContent = document.createElement('div');
-    textContent.innerHTML = `The battle awaits! <br> What is your name?`;
-    frontPageContainer.appendChild(textContent);
-  
-    const input = document.createElement('input');
-    input.id = 'input';
-    frontPageContainer.appendChild(input);
-  
-    const button = document.createElement('button');
-    frontPageContainer.appendChild(button);
-    button.textContent = 'To the Battle!';
-  
-    // Enter button event listener
-    input.addEventListener('keydown', bridgeToStartTheGame);
-  
-    // Button event listener
-    button.addEventListener('click', bridgeToStartTheGame);
+  // FrontPage Container
+  const frontPageContainer = document.createElement('div');
+  frontPageContainer.className = 'frontPage animate__animated animate__zoomIn';
+  document.body.appendChild(frontPageContainer);
+
+  // Contains the text content
+  const textContent = document.createElement('div');
+  textContent.innerHTML = `The battle awaits! <br> What is your name?`;
+  frontPageContainer.appendChild(textContent);
+
+  // The input field
+  const input = document.createElement('input');
+  input.id = 'input';
+  frontPageContainer.appendChild(input);
+
+  // The submit button
+  const button = document.createElement('button');
+  frontPageContainer.appendChild(button);
+  button.textContent = 'To the Battle!';
+
+  // Enter button event listener
+  input.addEventListener('keydown', bridgeToStartTheGame);
+
+  // Button event listener
+  button.addEventListener('click', bridgeToStartTheGame);
+}
+
+// Function that removes the frontPage elements and removes eventlisteners.
+function bridgeToStartTheGame(e) {
+  // remove DOM elements
+  const frontPageContainer = document.querySelector('.frontPage');
+  const input = document.querySelector('#input');
+
+  // Rejects any key entry (for submit) that is not enter
+  if (e instanceof KeyboardEvent && e.keyCode !== 13) {
+    return;
   }
-  
-  function bridgeToStartTheGame(e) {
-    const frontPageContainer = document.querySelector('.frontPage');
-    const input = document.querySelector('#input');
-  
-    if (e instanceof KeyboardEvent && e.keyCode !== 13) {
-      return;
-    }
-    if (e.keyCode === 13 && input.value !== '') {
-      input.removeEventListener('keydown', bridgeToStartTheGame);
-    }
-  
-    if (input.value !== '') {
-      frontPageContainer.className =
-        'frontPage animate__animated animate__zoomOut';
-      frontPageContainer.addEventListener('animationend', () => {
-        frontPageContainer.remove();
-        startTheGame(input.value);
-      });
-    }
+
+  // Enter conifrmation
+  if (e.keyCode === 13 && input.value !== '') {
+    input.removeEventListener('keydown', bridgeToStartTheGame);
   }
-  
-  function preBattle(compPlayer, player) {
-    // Selects the player grid
-    const grid = document.querySelector('.grid1');
-  
-    // Button container
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'buttonContainer';
-    grid.appendChild(buttonContainer);
-  
-    // Creates a randomizer button ands adds an eventlistener to it.
-    const randomizeButton = document.createElement('button');
-    buttonContainer.appendChild(randomizeButton);
-    randomizeButton.innerText = 'Randomize';
-    randomizeButton.className = 'randomizeButton';
-  
-    // Event Listener that randomizes the playr board object and calls the gridPainter from DOM.js
-    randomizeButton.addEventListener('click', () => {
-      player.board.randomizer();
-      gridPainter(player.board.getBoard());
-    });
-  
-    // Creates the start the Battle Button
-    const startTheBattleButton = document.createElement('button');
-    startTheBattleButton.innerText = 'Start the Battle';
-    startTheBattleButton.className = 'startButton';
-    buttonContainer.appendChild(startTheBattleButton);
-  
-    // Event listener for start the battle
-    startTheBattleButton.addEventListener('click', () => {
-      startTheBattleButton.className =
-        'startButton animate__animated animate__fadeOut';
-      randomizeButton.className =
-        'randomizeButton animate__animated animate__fadeOut';
-  
-      startTheBattle(compPlayer, player);
+
+  // If the button is clicked
+  if (input.value !== '') {
+    frontPageContainer.className =
+      'frontPage animate__animated animate__zoomOut';
+    frontPageContainer.addEventListener('animationend', () => {
+      frontPageContainer.remove();
+      startTheGame(input.value);
     });
   }
-  
-  function startTheBattle(compPlayer, player) {
-    enemyGridEventListener(compPlayer, player);
-  }
+}
+
+// The preBatttle function where a player can organize their ships
+function preBattle(compPlayer, player) {
+  // Selects the player grid
+  const grid = document.querySelector('.grid1');
+
+  // Button container
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'buttonContainer';
+  grid.appendChild(buttonContainer);
+
+  // Creates a randomizer button ands adds an eventlistener to it.
+  const randomizeButton = document.createElement('button');
+  buttonContainer.appendChild(randomizeButton);
+  randomizeButton.innerText = 'Randomize';
+  randomizeButton.className = 'randomizeButton';
+
+  // Event Listener that randomizes the playr board object and calls the gridPainter from DOM.js
+  randomizeButton.addEventListener('click', () => {
+    player.board.randomizer();
+    gridPainter(player.board.getBoard());
+  });
+
+  // Creates the start the Battle Button
+  const startTheBattleButton = document.createElement('button');
+  startTheBattleButton.innerText = 'Start the Battle';
+  startTheBattleButton.className = 'startButton';
+  buttonContainer.appendChild(startTheBattleButton);
+
+  // Event listener for start the battle & removes them from the DOM.
+  startTheBattleButton.addEventListener('click', () => {
+    startTheBattleButton.className =
+      'startButton animate__animated animate__fadeOut';
+    randomizeButton.className =
+      'randomizeButton animate__animated animate__fadeOut';
+    randomizeButton.addEventListener('animationend', () => {
+      buttonContainer.remove();
+    });
+    startTheBattle(compPlayer, player);
+  });
+}
+
+// Starts the battle by adding eventlistenrs to the cell of the enemy grid
+function startTheBattle(compPlayer, player) {
+  enemyGridEventListener(compPlayer, player);
+}
 
 // Creastes the grid with gridLoop
 function createGrid() {
@@ -99,22 +112,26 @@ function createGrid() {
   gridContainer.className = 'gridContainer animate__animated animate__fadeIn';
   document.body.appendChild(gridContainer);
 
+  // Player grid
   const grid1 = document.createElement('div');
   grid1.className = 'grid1';
   gridContainer.appendChild(grid1);
   gridLoop(grid1, 'P');
 
+  // Computer enemy grid
   const grid2 = document.createElement('div');
   grid2.className = 'grid3';
   gridLoop(grid2, 'C');
   gridContainer.appendChild(grid2, 'C');
 }
 
+// Creates the grid
 function gridLoop(container, typeOfPlayer) {
   for (let i = 0; i < 11; i += 1) {
     const gridRow = document.createElement('div');
     gridRow.className = 'gridRow';
 
+    // If first row
     if (i === 0) {
       gridRow.className = 'gridRowAlphaNum';
     }
@@ -129,12 +146,12 @@ function gridLoop(container, typeOfPlayer) {
         gridCell.textContent = i;
         gridCell.className = 'gridAlphaNum';
       }
+      // If first column
       if (i === 0) {
         const upperGrid = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
         gridCell.textContent = upperGrid[j];
         gridCell.className = 'gridAlphaNum';
       }
-
       gridCell.id = `${i - 1}${typeOfPlayer}${j - 1}`;
       gridRow.appendChild(gridCell);
     }
@@ -162,6 +179,7 @@ function enemyGridEventListener(compPlayer, player) {
   enemyGridClassChange.className = 'grid2';
   const enemyGrid = document.querySelectorAll('.grid2 > *> .gridCell');
 
+  // A listenerforwarded created so removeEventlistener can be added later
   const listenerForwarder = function (e) {
     HitOnClick(e.target, compPlayer, listenerForwarder, player);
   };
@@ -171,6 +189,7 @@ function enemyGridEventListener(compPlayer, player) {
   });
 }
 
+// Handles hits on the enemy grid
 function HitOnClick(cell, compPlayer, listenerForwarder, player) {
   const [row, col] = cell.id.split('C');
   const hitStatus = compPlayer.board.receiveHit(row, col);
@@ -272,4 +291,11 @@ function reset() {
   });
 }
 
-export { gridPainter, createGrid, enemyGridEventListener, compHit, frontPage, preBattle };
+export {
+  gridPainter,
+  createGrid,
+  enemyGridEventListener,
+  compHit,
+  frontPage,
+  preBattle,
+};

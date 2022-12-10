@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-return-assign */
-
 const shipFactory = require('./shipFactory');
 
 const GameboardFactory = () => {
   const board = [];
   let alignment = 'horizontal';
   let sunkCounter = 0;
-
+  // Increments sunk Counter when a ship is sunk (and calls it)
   const sunkIncrementor = () => {
     sunkCounter += 1;
   };
@@ -24,6 +23,7 @@ const GameboardFactory = () => {
     return true;
   };
 
+  // Returns true/false if all the ships have been sunk
   const gameOver = () => {
     if (sunkCounter === 10) {
       return true;
@@ -54,6 +54,7 @@ const GameboardFactory = () => {
     }
   };
 
+  // Randomizes the placement of all the ships on the object grid
   const randomizer = () => {
     const ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
     gridCreator();
@@ -98,10 +99,10 @@ const GameboardFactory = () => {
         board[ROW + i][COLUMN] = ship;
       }
     }
-
     return true;
   };
 
+  // Confirms if the boat can be placed on certain coordinates
   const shipPlacerChecker = (size, ROW, COLUMN) => {
     // Confirms the min&max allowed sizes
     if (size < 1 || size > 4) {
@@ -209,6 +210,7 @@ const GameboardFactory = () => {
     return 'horizontal';
   };
 
+  // Returns the board
   const getBoard = () => board;
 
   return {

@@ -8,9 +8,10 @@ import {
 } from './functions/DOM';
 import './style/style.css';
 import 'animate.css';
-// const GameboardFactory = require('./functions/GameboardFactory');
+
 const Player = require('./functions/player');
 
+// Start the game function that calls functions from DOM.js and Player.js. Player.js contains the other submodules.
 function startTheGame(name = 'You') {
   // Initializes the player gameboard
   const player = Player(name);
@@ -24,12 +25,11 @@ function startTheGame(name = 'You') {
   // Creates the interactive grid from the DOM.js file
   createGrid();
   gridPainter(playerBoard);
-
   preBattle(compPlayer, player);
 }
 
+// calls frontPage from DOM.js to ask for a name before proceeding
 frontPage();
-// startTheGame();
 
 // Exported so it works in the reset() function in the DOM.js module
 export { startTheGame };

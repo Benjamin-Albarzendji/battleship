@@ -1,5 +1,6 @@
 /* eslint-disable no-return-assign */
 
+// Creates the ships
 const shipFactory = (length) => {
   if (length < 1 || length > 4) {
     return false;

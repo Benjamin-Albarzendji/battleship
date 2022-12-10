@@ -6,11 +6,10 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.header{
-    position: absolute;
-    top: 0%;
-font-size: 5rem;
-
+.header {
+  position: absolute;
+  top: 0%;
+  font-size: 5rem;
 }
 
 .frontPage {
@@ -127,7 +126,6 @@ font-size: 5rem;
 .gridCellM > * {
   position: absolute;
   top: -35%;
-
   font-size: 2rem;
   text-align: center;
 }
@@ -144,20 +142,16 @@ font-size: 5rem;
   position: relative;
   justify-content: center;
   align-items: center;
-  /* left: 9%; */
-  /* top: 2%; */
   margin-left: 37px;
 }
 
 .gridAlphaNum {
-  /* position: absolute; */
   display: flex;
   justify-content: center;
   align-items: center;
   width: 35px;
   height: 35px;
   border: 1px solid rgba(255, 255, 255, 0.332);
-
   text-align: center;
 }
 

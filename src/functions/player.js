@@ -10,10 +10,13 @@ const PlayerFactory = (name = 'Player') => {
 
   // Container to make sure the computer does not send duplicate hits
   const sentHits = [];
+
   // The Function that handles computer hits
   const CompSendHit = () => {
     let hitObject = { x: 0, y: 0 };
     let goodToGo = false;
+
+    // Creates random coordinates between 0-9 that will hit the enemy, while checking for duplicates.
     while (!goodToGo) {
       hitObject = {
         x: Math.floor(Math.random() * 10),
