@@ -6,6 +6,13 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.header{
+    position: absolute;
+    top: 0%;
+font-size: 5rem;
+
+}
+
 .frontPage {
   width: 20%;
   height: 17%;
@@ -19,32 +26,31 @@ body {
   align-items: center;
 }
 
-.frontPage input{
-    width: 35%;
-    border-radius: 5px;
-    border:solid 1px rgba(106, 106, 106, 0.509);
-    padding: 5px;
+.frontPage input {
+  width: 35%;
+  border-radius: 5px;
+  border: solid 1px rgba(106, 106, 106, 0.509);
+  padding: 5px;
 }
 
-.frontPage button{
-    width: 35%;
-    border-radius: 15px;
-    border: none;
-    padding: 7px;
-    background-color: bla;
-    font-weight: bold;
-    transition: 1s;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+.frontPage button {
+  width: 35%;
+  border-radius: 15px;
+  border: none;
+  padding: 7px;
+  background-color: bla;
+  font-weight: bold;
+  transition: 1s;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .frontPage button:hover {
-    cursor: pointer;
-  }
-  .frontPage button:active {
-    transform: scale(0.9);
-    transition: 1s;
-  }
-  
+  cursor: pointer;
+}
+.frontPage button:active {
+  transform: scale(0.9);
+  transition: 1s;
+}
 
 .gridContainer {
   justify-content: center;
@@ -69,6 +75,41 @@ body {
   border: 1px solid rgb(45, 88, 230);
 }
 
+.grid1 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid1 .buttonContainer > button {
+  width: 90px;
+  border-radius: 15px;
+  border: none;
+  padding: 10px;
+  background-color: bla;
+  font-weight: bold;
+  transition: 1s;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.grid1 button:last-of-type {
+  width: 120px;
+}
+
+.grid1 button:hover {
+  cursor: pointer;
+}
+.grid1 button:active {
+  transform: scale(0.9);
+  transition: 1s;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  margin-top: 3%;
+}
+
 .grid2 .gridCell:hover {
   border: 1px solid red;
 }
@@ -81,7 +122,6 @@ body {
   height: 35px;
   border: 1px solid rgba(117, 117, 117, 0.332);
   transition: 0.5s;
-
 }
 
 .gridCellM > * {
@@ -135,17 +175,17 @@ body {
 .finalTextDiv {
   font-size: 3rem;
   position: absolute;
-  top: 17%;
+  top: 20%;
 }
 
 .playAgain {
   position: absolute;
-  top: 24%;
+  top: 27%;
 }
 
 .playAgainButton {
   position: absolute;
-  top: 28%;
+  top: 31%;
   width: 90px;
   border-radius: 15px;
   border: none;

@@ -4,6 +4,95 @@
 
 import { startTheGame } from '..';
 
+
+function frontPage() {
+    // FrontPage Container
+    const frontPageContainer = document.createElement('div');
+    frontPageContainer.className = 'frontPage animate__animated animate__zoomIn';
+    document.body.appendChild(frontPageContainer);
+  
+    const textContent = document.createElement('div');
+    textContent.innerHTML = `The battle awaits! <br> What is your name?`;
+    frontPageContainer.appendChild(textContent);
+  
+    const input = document.createElement('input');
+    input.id = 'input';
+    frontPageContainer.appendChild(input);
+  
+    const button = document.createElement('button');
+    frontPageContainer.appendChild(button);
+    button.textContent = 'To the Battle!';
+  
+    // Enter button event listener
+    input.addEventListener('keydown', bridgeToStartTheGame);
+  
+    // Button event listener
+    button.addEventListener('click', bridgeToStartTheGame);
+  }
+  
+  function bridgeToStartTheGame(e) {
+    const frontPageContainer = document.querySelector('.frontPage');
+    const input = document.querySelector('#input');
+  
+    if (e instanceof KeyboardEvent && e.keyCode !== 13) {
+      return;
+    }
+    if (e.keyCode === 13 && input.value !== '') {
+      input.removeEventListener('keydown', bridgeToStartTheGame);
+    }
+  
+    if (input.value !== '') {
+      frontPageContainer.className =
+        'frontPage animate__animated animate__zoomOut';
+      frontPageContainer.addEventListener('animationend', () => {
+        frontPageContainer.remove();
+        startTheGame(input.value);
+      });
+    }
+  }
+  
+  function preBattle(compPlayer, player) {
+    // Selects the player grid
+    const grid = document.querySelector('.grid1');
+  
+    // Button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'buttonContainer';
+    grid.appendChild(buttonContainer);
+  
+    // Creates a randomizer button ands adds an eventlistener to it.
+    const randomizeButton = document.createElement('button');
+    buttonContainer.appendChild(randomizeButton);
+    randomizeButton.innerText = 'Randomize';
+    randomizeButton.className = 'randomizeButton';
+  
+    // Event Listener that randomizes the playr board object and calls the gridPainter from DOM.js
+    randomizeButton.addEventListener('click', () => {
+      player.board.randomizer();
+      gridPainter(player.board.getBoard());
+    });
+  
+    // Creates the start the Battle Button
+    const startTheBattleButton = document.createElement('button');
+    startTheBattleButton.innerText = 'Start the Battle';
+    startTheBattleButton.className = 'startButton';
+    buttonContainer.appendChild(startTheBattleButton);
+  
+    // Event listener for start the battle
+    startTheBattleButton.addEventListener('click', () => {
+      startTheBattleButton.className =
+        'startButton animate__animated animate__fadeOut';
+      randomizeButton.className =
+        'randomizeButton animate__animated animate__fadeOut';
+  
+      startTheBattle(compPlayer, player);
+    });
+  }
+  
+  function startTheBattle(compPlayer, player) {
+    enemyGridEventListener(compPlayer, player);
+  }
+
 // Creastes the grid with gridLoop
 function createGrid() {
   const gridContainer = document.createElement('div');
@@ -16,7 +105,7 @@ function createGrid() {
   gridLoop(grid1, 'P');
 
   const grid2 = document.createElement('div');
-  grid2.className = 'grid2';
+  grid2.className = 'grid3';
   gridLoop(grid2, 'C');
   gridContainer.appendChild(grid2, 'C');
 }
@@ -68,6 +157,9 @@ function gridPainter(grid) {
 }
 // Activates the click listener on the enemy grid
 function enemyGridEventListener(compPlayer, player) {
+  // This is to enable hover effect from CSS hence the switch from grid3 to grid2
+  const enemyGridClassChange = document.querySelector('.grid3');
+  enemyGridClassChange.className = 'grid2';
   const enemyGrid = document.querySelectorAll('.grid2 > *> .gridCell');
 
   const listenerForwarder = function (e) {
@@ -180,4 +272,4 @@ function reset() {
   });
 }
 
-export { gridPainter, createGrid, enemyGridEventListener, compHit };
+export { gridPainter, createGrid, enemyGridEventListener, compHit, frontPage, preBattle };
